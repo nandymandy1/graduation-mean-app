@@ -19,11 +19,17 @@ mongoose.connection.on("err", err => {
 
 const app = express();
 const users = require("./routes/users");
+const styles = require("./routes/styles");
+const orders = require("./routes/orders");
+const gen = require("./routes/general");
 app.use(cors());
 // Body parser middleware
 app.use(bodyParser.json());
 app.use("/users", users);
-
+// Merchandiser Routes
+app.use("/styles", styles);
+app.use("/orders", orders);
+app.use("/general", gen);
 // passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -39,7 +45,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirnamem, "public/index.html"));
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 app.listen(port, () => {
